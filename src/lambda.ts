@@ -63,10 +63,4 @@ export const proxyHandler2: ProxyHandler = async (event, context) => {
       return err;
     }
   }
-
-  if (httpMethod === "PUT" && ["/avatar"])
-    return {
-      statusCode: 403,
-      body: "Execute access forbidden",
-    };
 };
