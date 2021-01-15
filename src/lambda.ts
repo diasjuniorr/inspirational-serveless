@@ -1,14 +1,19 @@
 import type { ProxyHandler } from "aws-lambda";
 import fetch from "node-fetch";
 
+interface Quote {
+  text: string;
+  author: string;
+}
+
 export const proxyHandler: ProxyHandler = async (event, context) => {
   const { httpMethod, path } = event;
 
   if (httpMethod === "GET" && ["/quotes"].includes(path)) {
     try {
-      const quotes = await fetch(`https://type.fit/api/quotes`).then((res) =>
-        res.json()
-      );
+      const quotes: Quote[] = await fetch(
+        `https://type.fit/api/quotes`
+      ).then((res) => res.json());
 
       const randomNumber = Math.floor(Math.random() * quotes.length);
       const quote = quotes[randomNumber];
@@ -19,16 +24,15 @@ export const proxyHandler: ProxyHandler = async (event, context) => {
         body: JSON.stringify(quote),
       };
     } catch (err) {
-      return {
-        statusCode: 500,
-      };
+      return err;
     }
   }
 
-  return {
-    statusCode: 403,
-    body: "Execute access forbidden",
-  };
+  if (httpMethod === "PUT" && ["/avatar"])
+    return {
+      statusCode: 403,
+      body: "Execute access forbidden",
+    };
 };
 
 export const proxyHandler2: ProxyHandler = async (event, context) => {
