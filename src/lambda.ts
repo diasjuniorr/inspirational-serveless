@@ -21,6 +21,7 @@ export const proxyHandler: ProxyHandler = async (event, context) => {
     } catch (err) {
       return {
         statusCode: 500,
+        body: err,
       };
     }
   }
