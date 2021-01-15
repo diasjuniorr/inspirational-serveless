@@ -19,4 +19,4 @@ returned
 
 - **GET /quotes?amount=1**: Returns an array of inspirational quotes
 
-Thanks to [Pedro Arantes](https://twitter.com/arantespp) for dedicating some time during the past two days to instruct me and also for providing the awesome npm package carlin which makes the process of deploying a lot easier and faster.
+Thanks to [Pedro Arantes](https://twitter.com/arantespp) for dedicating some time during the past two days to instruct me and also for providing the awesome npm package [**carlin**](https://carlin.ttoss.dev). which makes the process of deploying a lot easier and faster.
