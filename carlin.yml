@@ -1,0 +1,5 @@
+lambdaExternals:
+  - sharp
+parameters:
+  - key: PictureS3Bucket
+    value: jotapicturesbucket

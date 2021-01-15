@@ -12,6 +12,9 @@ Parameters:
   LambdaS3Version:
     Type: String
 
+  PictureS3Bucket:
+    Type: String
+
 Globals:
   Api:
     Auth:
@@ -24,6 +27,38 @@ Globals:
     Runtime: nodejs12.x
 
 Resources:
+  OptimizeServelessFunctionIAMRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeROlePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - s3:GetObject
+              - s3:PutObject
+            Resource:
+              - "arn:aws:s3:::*"
+
+  OptimizeServelessFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Environment:
+        Variables:
+          PictureS3Bucket: !Ref PictureS3Bucket
+      Events:
+        S3Event:
+          Type: S3
+          Properties:
+            Bucket: !Ref PictureS3Bucket
+            Events: s3.ObjectCreated:*
+            Filter:
+              S3Key:
+                Rules:
+                  - Name: prefix
+                    Value: .jpg
+      Handler: index.pictureOptmizer
+
   ApiV1ServerlessApi:
     Type: AWS::Serverless::Api
     Properties:
