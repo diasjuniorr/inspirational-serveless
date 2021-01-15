@@ -16,11 +16,34 @@ export const proxyHandler: ProxyHandler = async (event, context) => {
       return {
         statusCode: 200,
         headers: { "content-type": "application/json" },
-        body: quote,
+        body: JSON.stringify(quote),
       };
     } catch (err) {
       return {
         statusCode: 500,
+      };
+    }
+  }
+
+  return {
+    statusCode: 403,
+    body: "Execute access forbidden",
+  };
+};
+
+export const proxyHandler2: ProxyHandler = async (event, context) => {
+  const { httpMethod, path } = event;
+
+  if (httpMethod === "GET" && ["/quotes"].includes(path)) {
+    try {
+      return {
+        statusCode: 200,
+        headers: { "content-type": "tex/plain" },
+        body: String("Hello World!"),
+      };
+    } catch (err) {
+      return {
+        statusCode: 403,
         body: err,
       };
     }
