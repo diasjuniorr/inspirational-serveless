@@ -59,12 +59,12 @@ Resources:
       Role: !GetAtt ApiV1ServerlessFunctionIAMRole.Arn
       Timeout: 600
 
-  #v2
+  #v1.2
 
   ApiV2ServerlessApi:
     Type: AWS::Serverless::Api
     Properties:
-      StageName: v2
+      StageName: v1.2
 
   ApiV2ServerlessFunctionIAMRole:
     Type: "AWS::IAM::Role"
@@ -102,4 +102,4 @@ Outputs:
     Value: !Sub "https://${ApiV1ServerlessApi}.execute-api.${AWS::Region}.amazonaws.com/v1/"
   ApiV2Endpoint:
     Description: "API v2 stage endpoint."
-    Value: !Sub "https://${ApiV2ServerlessApi}.execute-api.${AWS::Region}.amazonaws.com/v2/"
+    Value: !Sub "https://${ApiV2ServerlessApi}.execute-api.${AWS::Region}.amazonaws.com/v1.2/"
